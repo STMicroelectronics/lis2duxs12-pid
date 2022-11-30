@@ -3129,6 +3129,20 @@ int32_t lis2duxs12_long_cnt_get(stmdev_ctx_t *ctx, uint16_t *val)
 }
 
 /**
+  * @brief  FSM status.[get]
+  *
+  * @param  ctx      read / write interface definitions
+  * @param  val      register FSM_STATUS_MAINPAGE
+  *
+  */
+int32_t lis2duxs12_fsm_status_get(stmdev_ctx_t *ctx,
+                                  lis2duxs12_fsm_status_mainpage_t *val)
+{
+  return lis2duxs12_read_reg(ctx, LIS2DUXS12_FSM_STATUS_MAINPAGE,
+                             (uint8_t *) val, 1);
+}
+
+/**
   * @brief  FSM output registers.[get]
   *
   * @param  ctx    Read / write interface definitions.(ptr)
@@ -3136,8 +3150,7 @@ int32_t lis2duxs12_long_cnt_get(stmdev_ctx_t *ctx, uint16_t *val)
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
-int32_t lis2duxs12_fsm_out_get(stmdev_ctx_t *ctx,
-                               lis2duxs12_fsm_out_t *val)
+int32_t lis2duxs12_fsm_out_get(stmdev_ctx_t *ctx, uint8_t *val)
 {
   int32_t ret;
 
@@ -3145,8 +3158,7 @@ int32_t lis2duxs12_fsm_out_get(stmdev_ctx_t *ctx,
 
   if (ret == 0)
   {
-    ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_FSM_OUTS1,
-                            (uint8_t *)&val->fsm_outs1, 16);
+    ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_FSM_OUTS1, val, 8);
   }
 
   ret += lis2duxs12_mem_bank_set(ctx, LIS2DUXS12_MAIN_MEM_BANK);
