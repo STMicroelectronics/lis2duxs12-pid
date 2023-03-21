@@ -1823,19 +1823,19 @@ int32_t lis2duxs12_fifo_mode_get(stmdev_ctx_t *ctx, lis2duxs12_fifo_mode_t *val)
       val->operation = LIS2DUXS12_FIFO_OFF;
     }
     else {
-      val->operation = (enum operation)fifo_ctrl.fifo_mode;
+      val->operation = (enum lis2duxs12_operation)fifo_ctrl.fifo_mode;
     }
     val->cfg_change_in_fifo = fifo_ctrl.cfg_chg_en;
 
     /* get fifo depth (1X/2X) */
-    val->store = (enum store)fifo_ctrl.fifo_depth;
+    val->store = (enum lis2duxs12_store)fifo_ctrl.fifo_depth;
 
     /* Get xl_only_fifo */
     val->xl_only = fifo_wtm.xl_only_fifo;
 
     /* get batching info */
-    val->batch.dec_ts = (enum dec_ts)fifo_batch.dec_ts_batch;
-    val->batch.bdr_xl = (enum bdr_xl)fifo_batch.bdr_xl;
+    val->batch.dec_ts = (enum lis2duxs12_dec_ts)fifo_batch.dec_ts_batch;
+    val->batch.bdr_xl = (enum lis2duxs12_bdr_xl)fifo_batch.bdr_xl;
 
     /* get watermark */
     val->watermark = fifo_wtm.fth;
@@ -2634,7 +2634,7 @@ int32_t lis2duxs12_sixd_config_get(stmdev_ctx_t *ctx, lis2duxs12_sixd_config_t *
 
   ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_SIXD, (uint8_t *)&sixd, 1);
 
-  val->mode = (enum mode)sixd.d4d_en;
+  val->mode = (enum lis2duxs12_mode)sixd.d4d_en;
 
   switch ((sixd.d6d_ths))
   {
@@ -2782,8 +2782,8 @@ int32_t lis2duxs12_wakeup_config_get(stmdev_ctx_t *ctx, lis2duxs12_wakeup_config
 
     val->wake_ths_weight = int_cfg.wake_ths_w;
     val->wake_ths = wup_ths.wk_ths;
-    val->wake_enable = (enum wake_enable)wup_ths.sleep_on;
-    val->inact_odr = (enum inact_odr)ctrl4.inact_odr;
+    val->wake_enable = (enum lis2duxs12_wake_enable)wup_ths.sleep_on;
+    val->inact_odr = (enum lis2duxs12_inact_odr)ctrl4.inact_odr;
   }
 
   return ret;
@@ -2865,7 +2865,7 @@ int32_t lis2duxs12_tap_config_get(stmdev_ctx_t *ctx, lis2duxs12_tap_config_t *va
 
   if (ret == 0)
   {
-    val->axis = (enum axis)tap_cfg0.axis;
+    val->axis = (enum lis2duxs12_axis)tap_cfg0.axis;
     val->inverted_peak_time = tap_cfg0.invert_t;
     val->pre_still_ths = tap_cfg1.pre_still_ths;
     val->post_still_ths = tap_cfg3.post_still_ths;
