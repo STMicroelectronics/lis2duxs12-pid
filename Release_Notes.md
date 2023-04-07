@@ -30,7 +30,7 @@ This directory contains the LIS2DUXS12 component drivers.
 # Update history
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section1" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section1" aria-hidden="true">
 <label for="collapse-section1" aria-hidden="true">V1.0.0 / 14-November-2022</label>
 <div>
 
@@ -39,6 +39,18 @@ This directory contains the LIS2DUXS12 component drivers.
 ### First release
 
 - First official release [ref. DS v2.0]
+
+##
+
+</div>
+<input type="checkbox" id="collapse-section1" checked aria-hidden="true">
+<label for="collapse-section1" aria-hidden="true">V1.0.1 / 07-April-2023</label>
+<div>
+
+## Main changes
+- fix defines for low power ODRs
+- Fix BW setting for LP mode with ODR < 50 Hz
+
 
 ##
 
