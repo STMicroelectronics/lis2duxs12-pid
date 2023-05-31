@@ -1427,7 +1427,7 @@ int32_t lis2duxs12_pin_int2_route_set(stmdev_ctx_t *ctx, lis2duxs12_pin_int_rout
   lis2duxs12_md2_cfg_t md2_cfg;
   int32_t ret;
 
-  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_CTRL2, (uint8_t *)&ctrl3, 1);
+  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_CTRL3, (uint8_t *)&ctrl3, 1);
 
   if (ret == 0)
   {
