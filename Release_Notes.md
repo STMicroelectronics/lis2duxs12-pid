@@ -64,17 +64,27 @@ This directory contains the LIS2DUXS12 component drivers.
 ## Main changes
 - Fix struct and enum names
 
-
 ##
 
 </div>
 
-<input type="checkbox" id="collapse-section4" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section4" aria-hidden="true">
 <label for="collapse-section4" aria-hidden="true">V1.1.1 / 21-June-2023</label>
 <div>
 
 ## Main changes
 - fix: change mismatched registers in read/write operation on int2 routing
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section5" checked aria-hidden="true">
+<label for="collapse-section5" aria-hidden="true">V1.1.2 / 28-June-2023</label>
+<div>
+
+## Main changes
+- Fix typos in ODR define names
 
 ##
 
