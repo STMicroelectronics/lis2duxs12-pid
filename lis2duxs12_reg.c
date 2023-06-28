@@ -321,7 +321,7 @@ int32_t lis2duxs12_mode_set(stmdev_ctx_t *ctx, lis2duxs12_md_t *val)
   switch (val->odr) {
     /* no anti-aliasing filter present */
     case LIS2DUXS12_OFF:
-    case LIS2DUXS12_1Hz5_ULP:
+    case LIS2DUXS12_1Hz6_ULP:
     case LIS2DUXS12_3Hz_ULP:
     case LIS2DUXS12_25Hz_ULP:
       ctrl5.bw = 0x0;
@@ -421,8 +421,8 @@ int32_t lis2duxs12_mode_get(stmdev_ctx_t *ctx, lis2duxs12_md_t *val)
     case LIS2DUXS12_OFF:
       val->odr = LIS2DUXS12_OFF;
       break;
-    case LIS2DUXS12_1Hz5_ULP:
-      val->odr = LIS2DUXS12_1Hz5_ULP;
+    case LIS2DUXS12_1Hz6_ULP:
+      val->odr = LIS2DUXS12_1Hz6_ULP;
       break;
     case LIS2DUXS12_3Hz_ULP:
       val->odr = LIS2DUXS12_3Hz_ULP;
