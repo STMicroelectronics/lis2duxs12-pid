@@ -2065,6 +2065,7 @@ float_t lis2duxs12_from_fs4g_to_mg(int16_t lsb);
 float_t lis2duxs12_from_fs8g_to_mg(int16_t lsb);
 float_t lis2duxs12_from_fs16g_to_mg(int16_t lsb);
 float_t lis2duxs12_from_lsb_to_celsius(int16_t lsb);
+float_t lis2duxs12_from_lsb_to_mv(int16_t lsb);
 
 int32_t lis2duxs12_device_id_get(stmdev_ctx_t *ctx, uint8_t *val);
 
@@ -2189,7 +2190,8 @@ int32_t lis2duxs12_outt_data_get(stmdev_ctx_t *ctx, lis2duxs12_md_t *md,
                                lis2duxs12_outt_data_t *data);
 
 typedef struct {
-  int16_t ah_qvar;
+  float_t mv;
+  int16_t raw;
 } lis2duxs12_ah_qvar_data_t;
 int32_t lis2duxs12_ah_qvar_data_get(stmdev_ctx_t *ctx, lis2duxs12_md_t *md,
                                lis2duxs12_ah_qvar_data_t *data);
@@ -2388,7 +2390,10 @@ typedef struct {
     float_t mg[3];
     int16_t raw[3];
   }xl[2];
-  int16_t ah_qvar;
+  struct {
+    float_t mv;
+    int16_t raw;
+  } ah_qvar;
   struct {
     float_t deg_c;
     int16_t raw;

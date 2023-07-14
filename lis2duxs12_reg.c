@@ -109,6 +109,11 @@ float_t lis2duxs12_from_lsb_to_celsius(int16_t lsb)
   return ((float_t)lsb / 355.5f) + 25.0f;
 }
 
+float_t lis2duxs12_from_lsb_to_mv(int16_t lsb)
+{
+  return ((float_t)lsb) / 74.4f;
+}
+
 /**
   * @}
   *
@@ -701,9 +706,10 @@ int32_t lis2duxs12_ah_qvar_data_get(stmdev_ctx_t *ctx, lis2duxs12_md_t *md,
 
   ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_OUT_T_AH_QVAR_L, buff, 2);
 
-  data->ah_qvar = (int16_t)buff[1U];
-  data->ah_qvar = (data->ah_qvar * 256) + (int16_t) buff[0];
+  data->raw = (int16_t)buff[1U];
+  data->raw = (data->raw * 256) + (int16_t) buff[0];
 
+  data->mv = lis2duxs12_from_lsb_to_mv(data->raw);
   return ret;
 }
 
@@ -1934,7 +1940,8 @@ int32_t lis2duxs12_fifo_data_get(stmdev_ctx_t *ctx, lis2duxs12_md_t *md,
          if (fifo_tag.tag_sensor == (uint8_t)LIS2DUXS12_XL_TEMP_TAG) {
            data->heat.deg_c = lis2duxs12_from_lsb_to_celsius(data->heat.raw);
         } else {
-           data->ah_qvar = data->heat.raw;
+           data->ah_qvar.raw = data->heat.raw;
+           data->ah_qvar.mv = lis2duxs12_from_lsb_to_mv(data->ah_qvar.raw);
        }
       } else {
         /* A FIFO sample consists of 16-bits 3-axis XL at ODR  */
