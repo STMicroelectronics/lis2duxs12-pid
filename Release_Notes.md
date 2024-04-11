@@ -135,13 +135,25 @@ This directory contains the LIS2DUXS12 component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section10" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section10" aria-hidden="true">
 <label for="collapse-section10" aria-hidden="true">V2.0.0 / 20-Mar-2024</label>
 <div>
 
 ## Main changes
 - Fixed code style (Artistic Style Version 3.4.13)
 - Add "const" to ctx arg for all APIs
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section11" checked aria-hidden="true">
+<label for="collapse-section11" aria-hidden="true">V2.0.1 / 11-Apr-2024</label>
+<div>
+
+## Main changes
+- updated README.md file with tag reference and mdelay description
+- Fix lis2duxs12_mode_get API
 
 ##
 
