@@ -2139,7 +2139,7 @@ int32_t lis2duxs12_fifo_data_get(const stmdev_ctx_t *ctx, const lis2duxs12_md_t 
         data->xl[0].raw[1] = (int16_t)fifo_raw[1] / 16;
         data->xl[0].raw[1] = (data->xl[0].raw[1] + ((int16_t)fifo_raw[2] * 16)) * 16;
         data->xl[0].raw[2] = (int16_t)fifo_raw[3];
-        data->xl[0].raw[2] = data->xl[0].raw[2] + ((int16_t)fifo_raw[4] * 256) * 16;
+        data->xl[0].raw[2] = (data->xl[0].raw[2] + (int16_t)fifo_raw[4] * 256) * 16;
         data->heat.raw = (int16_t)fifo_raw[4] / 16;
         data->heat.raw = (data->heat.raw + ((int16_t)fifo_raw[5] * 16)) * 16;
         if (fifo_tag.tag_sensor == (uint8_t)LIS2DUXS12_XL_TEMP_TAG)
