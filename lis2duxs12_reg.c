@@ -184,7 +184,7 @@ int32_t lis2duxs12_init_set(const stmdev_ctx_t *ctx, lis2duxs12_init_t val)
           break;
         }
 
-        /* boot procedue ended correctly */
+        /* boot procedure ended correctly */
         if (ctrl4.boot == 0U)
         {
           break;
@@ -217,7 +217,7 @@ int32_t lis2duxs12_init_set(const stmdev_ctx_t *ctx, lis2duxs12_init_t val)
           break;
         }
 
-        /* sw-reset procedue ended correctly */
+        /* sw-reset procedure ended correctly */
         if (status.sw_reset == 0U)
         {
           break;
@@ -1419,7 +1419,7 @@ int32_t lis2duxs12_spi_mode_get(const stmdev_ctx_t *ctx, lis2duxs12_spi_mode *va
 
   ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_PIN_CTRL, (uint8_t *)&pin_ctrl, 1);
 
-  switch ((pin_ctrl.h_lactive))
+  switch ((pin_ctrl.sim))
   {
     case 0x0:
       *val = LIS2DUXS12_SPI_4_WIRE;
