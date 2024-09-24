@@ -519,7 +519,7 @@ int32_t lis2duxs12_mode_get(const stmdev_ctx_t *ctx, lis2duxs12_md_t *val)
       val->odr = LIS2DUXS12_25Hz_ULP;
       break;
     case 0x04:
-      val->odr = LIS2DUXS12_6Hz_LP;
+      val->odr = (ctrl3.hp_en == 0x1U) ? LIS2DUXS12_6Hz_HP : LIS2DUXS12_6Hz_LP;
       break;
     case 0x05:
       val->odr = (ctrl3.hp_en == 0x1U) ? LIS2DUXS12_12Hz5_HP : LIS2DUXS12_12Hz5_LP;
