@@ -2563,6 +2563,61 @@ int32_t lis2duxs12_stpcnt_period_get(const stmdev_ctx_t *ctx, uint16_t *val)
 }
 
 /**
+  * @brief  smart_power functionality configuration.[set]
+  *
+  * @param  ctx      read / write interface definitions
+  * @param  val      lis2duxs12_smart_power_cfg_t structure.
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  */
+int32_t lis2duxs12_smart_power_set(const stmdev_ctx_t *ctx, lis2duxs12_smart_power_cfg_t val)
+{
+  lis2duxs12_ctrl1_t ctrl1;
+  lis2duxs12_smart_power_ctrl_t smart_power_ctrl;
+  int32_t ret;
+
+  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_CTRL1, (uint8_t *)&ctrl1, 1);
+  ctrl1.smart_power_en = val.enable;
+  ret += lis2duxs12_write_reg(ctx, LIS2DUXS12_CTRL1, (uint8_t *)&ctrl1, 1);
+
+  if (val.enable == 0)
+  {
+    /* if disabling smart_power no need to set win/dur fields */
+    return ret;
+  }
+
+  smart_power_ctrl.smart_power_ctrl_win = val.window;
+  smart_power_ctrl.smart_power_ctrl_dur = val.duration;
+  ret += lis2duxs12_ln_pg_write(ctx, LIS2DUXS12_EMB_ADV_PG_0 + LIS2DUXS12_SMART_POWER_CTRL,
+                                (uint8_t *)&smart_power_ctrl, 1);
+
+  return ret;
+}
+
+/**
+  * @brief  smart_power functionality configuration.[get]
+  *
+  * @param  ctx      read / write interface definitions
+  * @param  val      lis2duxs12_smart_power_cfg_t structure.
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  */
+int32_t lis2duxs12_smart_power_get(const stmdev_ctx_t *ctx, lis2duxs12_smart_power_cfg_t *val)
+{
+  lis2duxs12_ctrl1_t ctrl1;
+  lis2duxs12_smart_power_ctrl_t smart_power_ctrl;
+  int32_t ret;
+
+  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_CTRL1, (uint8_t *)&ctrl1, 1);
+  val->enable = ctrl1.smart_power_en;
+
+  ret += lis2duxs12_ln_pg_read(ctx, LIS2DUXS12_EMB_ADV_PG_0 + LIS2DUXS12_SMART_POWER_CTRL,
+                               (uint8_t *)&smart_power_ctrl, 1);
+  val->window = smart_power_ctrl.smart_power_ctrl_win;
+  val->duration = smart_power_ctrl.smart_power_ctrl_dur;
+
+  return ret;
+}
+
+/**
   * @}
   *
   */

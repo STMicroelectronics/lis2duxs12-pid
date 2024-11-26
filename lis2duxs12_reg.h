@@ -251,9 +251,9 @@ typedef struct
   uint8_t if_add_inc                   : 1;
   uint8_t sw_reset                     : 1;
   uint8_t int1_on_res                  : 1;
-  uint8_t not_used0                    : 1;
+  uint8_t smart_power_en               : 1;
 #elif DRV_BYTE_ORDER == DRV_BIG_ENDIAN
-  uint8_t not_used0                    : 1;
+  uint8_t smart_power_en               : 1;
   uint8_t int1_on_res                  : 1;
   uint8_t sw_reset                     : 1;
   uint8_t if_add_inc                   : 1;
@@ -1929,6 +1929,18 @@ typedef struct
 #endif /* DRV_BYTE_ORDER */
 } lis2duxs12_t_ah_qvar_sensitivity_h_t;
 
+#define LIS2DUXS12_SMART_POWER_CTRL                     0xD2U
+typedef struct
+{
+#if DRV_BYTE_ORDER == DRV_LITTLE_ENDIAN
+  uint8_t smart_power_ctrl_win         : 4;
+  uint8_t smart_power_ctrl_dur         : 4;
+#elif DRV_BYTE_ORDER == DRV_BIG_ENDIAN
+  uint8_t smart_power_ctrl_dur         : 4;
+  uint8_t smart_power_ctrl_win         : 4;
+#endif /* DRV_BYTE_ORDER */
+} lis2duxs12_smart_power_ctrl_t;
+
 /**
   * @}
   *
@@ -2047,6 +2059,7 @@ typedef union
   lis2duxs12_pedo_sc_deltat_h_t    pedo_sc_deltat_h;
   lis2duxs12_t_ah_qvar_sensitivity_l_t    t_ah_qvar_sensitivity_l;
   lis2duxs12_t_ah_qvar_sensitivity_h_t    t_ah_qvar_sensitivity_h;
+  lis2duxs12_smart_power_ctrl_t   smart_power_ctrl;
   bitwise_t    bitwise;
   uint8_t    byte;
 } lis2duxs12_reg_t;
@@ -2541,6 +2554,15 @@ int32_t lis2duxs12_stpcnt_debounce_get(const stmdev_ctx_t *ctx, uint8_t *val);
 
 int32_t lis2duxs12_stpcnt_period_set(const stmdev_ctx_t *ctx, uint16_t val);
 int32_t lis2duxs12_stpcnt_period_get(const stmdev_ctx_t *ctx, uint16_t *val);
+
+typedef struct
+{
+  uint8_t enable                       : 1;
+  uint8_t window                       : 1;
+  uint8_t duration                     : 1;
+} lis2duxs12_smart_power_cfg_t;
+int32_t lis2duxs12_smart_power_set(const stmdev_ctx_t *ctx, lis2duxs12_smart_power_cfg_t val);
+int32_t lis2duxs12_smart_power_get(const stmdev_ctx_t *ctx, lis2duxs12_smart_power_cfg_t *val);
 
 int32_t lis2duxs12_tilt_mode_set(const stmdev_ctx_t *ctx, uint8_t val);
 int32_t lis2duxs12_tilt_mode_get(const stmdev_ctx_t *ctx, uint8_t *val);
