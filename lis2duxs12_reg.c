@@ -2178,8 +2178,8 @@ int32_t lis2duxs12_fifo_data_get(const stmdev_ctx_t *ctx, const lis2duxs12_md_t 
       {
         /* A FIFO sample consists of 16-bits 3-axis XL at ODR  */
         data->xl[0].raw[0] = (int16_t)fifo_raw[0] + (int16_t)fifo_raw[1] * 256;
-        data->xl[0].raw[1] = (int16_t)fifo_raw[1] + (int16_t)fifo_raw[3] * 256;
-        data->xl[0].raw[2] = (int16_t)fifo_raw[2] + (int16_t)fifo_raw[5] * 256;
+        data->xl[0].raw[1] = (int16_t)fifo_raw[2] + (int16_t)fifo_raw[3] * 256;
+        data->xl[0].raw[2] = (int16_t)fifo_raw[4] + (int16_t)fifo_raw[5] * 256;
       }
       break;
     case 0x4:
