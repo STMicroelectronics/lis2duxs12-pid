@@ -181,7 +181,7 @@ This directory contains the LIS2DUXS12 component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section14" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section14" aria-hidden="true">
 <label for="collapse-section14" aria-hidden="true">V2.2.1 / 25-Sept-2024</label>
 <div>
 
@@ -191,6 +191,19 @@ This directory contains the LIS2DUXS12 component drivers.
 - Fix BW setting in mode_set API
 - Fix FIFO data get API
 - (origin/master) Fixed few typos
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section15" checked aria-hidden="true">
+<label for="collapse-section15" aria-hidden="true">V2.3.0 / 18-Dec-2024</label>
+<div>
+
+## Main changes
+
+- Fix fifo_data_get() API in xl_only==1 case
+- Add smart_power configuration
 
 ##
 
