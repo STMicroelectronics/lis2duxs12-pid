@@ -2140,8 +2140,8 @@ int32_t lis2duxs12_fifo_data_get(const stmdev_ctx_t *ctx, const lis2duxs12_md_t 
 
   switch (fifo_tag.tag_sensor)
   {
-    case 0x3:
-    case 0x1E:
+    case LIS2DUXS12_XL_ONLY_2X_TAG:
+    case LIS2DUXS12_XL_ONLY_2X_TAG_2ND:
       /* A FIFO sample consists of 2X 8-bits 3-axis XL at ODR/2 */
       ret = lis2duxs12_fifo_out_raw_get(ctx, fifo_raw);
       for (i = 0; i < 3; i++)
@@ -2150,8 +2150,8 @@ int32_t lis2duxs12_fifo_data_get(const stmdev_ctx_t *ctx, const lis2duxs12_md_t 
         data->xl[1].raw[i] = (int16_t)fifo_raw[3 + i] * 256;
       }
       break;
-    case 0x1F:
-    case 0x2:
+    case LIS2DUXS12_XL_AND_QVAR:
+    case LIS2DUXS12_XL_TEMP_TAG:
       ret = lis2duxs12_fifo_out_raw_get(ctx, fifo_raw);
       if (fmd->xl_only == 0x0U)
       {
@@ -2182,7 +2182,7 @@ int32_t lis2duxs12_fifo_data_get(const stmdev_ctx_t *ctx, const lis2duxs12_md_t 
         data->xl[0].raw[2] = (int16_t)fifo_raw[4] + (int16_t)fifo_raw[5] * 256;
       }
       break;
-    case 0x4:
+    case LIS2DUXS12_TIMESTAMP_TAG:
       ret = lis2duxs12_fifo_out_raw_get(ctx, fifo_raw);
 
       data->cfg_chg.cfg_change = fifo_raw[0] >> 7;
@@ -2200,7 +2200,7 @@ int32_t lis2duxs12_fifo_data_get(const stmdev_ctx_t *ctx, const lis2duxs12_md_t 
       data->cfg_chg.timestamp = (data->cfg_chg.timestamp * 256U) +  fifo_raw[2];
       break;
 
-    case 0x12:
+    case LIS2DUXS12_STEP_COUNTER_TAG:
       ret = lis2duxs12_fifo_out_raw_get(ctx, fifo_raw);
 
       data->pedo.steps = fifo_raw[1];
@@ -2213,7 +2213,7 @@ int32_t lis2duxs12_fifo_data_get(const stmdev_ctx_t *ctx, const lis2duxs12_md_t 
 
       break;
 
-    case 0x0:
+    case LIS2DUXS12_FIFO_EMPTY:
     default:
       /* do nothing */
       break;
