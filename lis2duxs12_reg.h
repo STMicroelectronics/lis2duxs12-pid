@@ -2423,6 +2423,12 @@ typedef enum
   LIS2DUXS12_BDR_XL_ODR_OFF         = 0x7,
 } lis2duxs12_bdr_xl_t;
 
+typedef enum
+{
+  LIS2DUXS12_FIFO_EV_WTM           = 0x0,
+  LIS2DUXS12_FIFO_EV_FULL          = 0x1,
+} lis2duxs12_fifo_event_t;
+
 typedef struct
 {
   lis2duxs12_operation_t operation;
@@ -2430,6 +2436,7 @@ typedef struct
   uint8_t xl_only                      : 1; /* only XL samples (16-bit) are stored in FIFO */
   uint8_t watermark                    : 7; /* (0 disable) max 127 @16bit, even and max 256 @8bit.*/
   uint8_t cfg_change_in_fifo           : 1;
+  lis2duxs12_fifo_event_t fifo_event      : 1; /* 0: FIFO watermark, 1: FIFO full */
   struct
   {
     lis2duxs12_dec_ts_t dec_ts; /* decimation for timestamp batching*/

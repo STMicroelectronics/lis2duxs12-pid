@@ -2010,7 +2010,7 @@ int32_t lis2duxs12_fifo_mode_set(const stmdev_ctx_t *ctx, lis2duxs12_fifo_mode_t
     /* set watermark */
     if (val.watermark > 0U)
     {
-      fifo_ctrl.stop_on_fth = 1;
+      fifo_ctrl.stop_on_fth = (val.fifo_event == LIS2DUXS12_FIFO_EV_WTM) ? 1 : 0;
       fifo_wtm.fth = val.watermark;
     }
 
