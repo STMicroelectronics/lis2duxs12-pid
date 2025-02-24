@@ -211,6 +211,11 @@ int32_t lis2duxs12_init_set(const stmdev_ctx_t *ctx, lis2duxs12_init_t val)
 
       do
       {
+        if (ctx->mdelay != NULL)
+        {
+          ctx->mdelay(1); /* should be 50 us */
+        }
+
         ret = lis2duxs12_status_get(ctx, &status);
         if (ret != 0)
         {
@@ -221,11 +226,6 @@ int32_t lis2duxs12_init_set(const stmdev_ctx_t *ctx, lis2duxs12_init_t val)
         if (status.sw_reset == 0U)
         {
           break;
-        }
-
-        if (ctx->mdelay != NULL)
-        {
-          ctx->mdelay(1); /* should be 50 us */
         }
       } while (cnt++ < 5U);
 
