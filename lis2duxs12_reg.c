@@ -875,13 +875,14 @@ int32_t lis2duxs12_outt_data_get(const stmdev_ctx_t *ctx,
 int32_t lis2duxs12_ah_qvar_data_get(const stmdev_ctx_t *ctx,
                                     lis2duxs12_ah_qvar_data_t *data)
 {
-  uint8_t buff[2];
+  uint8_t buff[3];
   int32_t ret;
 
-  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_OUT_T_AH_QVAR_L, buff, 2);
+  /* Read and discard also OUT_Z_H reg to clear drdy */
+  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_OUT_T_AH_QVAR_L - 1, buff, 3);
 
-  data->raw = (int16_t)buff[1U];
-  data->raw = (data->raw * 256) + (int16_t) buff[0];
+  data->raw = (int16_t)buff[2U];
+  data->raw = (data->raw * 256) + (int16_t) buff[1U];
 
   data->mv = lis2duxs12_from_lsb_to_mv(data->raw);
   return ret;
