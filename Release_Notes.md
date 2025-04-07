@@ -196,7 +196,7 @@ This directory contains the LIS2DUXS12 component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section15" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section15" aria-hidden="true">
 <label for="collapse-section15" aria-hidden="true">V2.3.0 / 18-Dec-2024</label>
 <div>
 
@@ -204,6 +204,22 @@ This directory contains the LIS2DUXS12 component drivers.
 
 - Fix fifo_data_get() API in xl_only==1 case
 - Add smart_power configuration
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section16" checked aria-hidden="true">
+<label for="collapse-section16" aria-hidden="true">V2.4.0 / 07-Apr-2025</label>
+<div>
+
+## Main changes
+
+- fix drdy event clearing
+- Aligned to DS rev7
+- fix RESET case in init_set()
+- Add fifo_event_t enum to set stop_on_fth bit
+- Use defines (and not numbers) as FIFO tags
 
 ##
 
