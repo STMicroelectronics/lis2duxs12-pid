@@ -2037,11 +2037,8 @@ int32_t lis2duxs12_fifo_mode_set(const stmdev_ctx_t *ctx, lis2duxs12_fifo_mode_t
     fifo_wtm.xl_only_fifo = val.xl_only;
 
     /* set batching info */
-    if (val.batch.dec_ts != LIS2DUXS12_DEC_TS_OFF)
-    {
-      fifo_batch.dec_ts_batch = (uint8_t)val.batch.dec_ts;
-      fifo_batch.bdr_xl = (uint8_t)val.batch.bdr_xl;
-    }
+    fifo_batch.dec_ts_batch = (uint8_t)val.batch.dec_ts;
+    fifo_batch.bdr_xl = (uint8_t)val.batch.bdr_xl;
 
     fifo_ctrl.cfg_chg_en = val.cfg_change_in_fifo;
 
