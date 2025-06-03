@@ -3400,9 +3400,6 @@ int32_t lis2duxs12_emb_fsm_en_get(const stmdev_ctx_t *ctx, uint8_t *val)
                               (uint8_t *)&emb_func_en_b, 1);
 
     *val = emb_func_en_b.fsm_en;
-
-    ret += lis2duxs12_write_reg(ctx, LIS2DUXS12_EMB_FUNC_EN_B,
-                                (uint8_t *)&emb_func_en_b, 1);
   }
 
   ret += lis2duxs12_mem_bank_set(ctx, LIS2DUXS12_MAIN_MEM_BANK);
