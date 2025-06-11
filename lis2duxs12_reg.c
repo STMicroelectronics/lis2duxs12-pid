@@ -295,12 +295,10 @@ int32_t lis2duxs12_status_get(const stmdev_ctx_t *ctx, lis2duxs12_status_t *val)
   */
 int32_t lis2duxs12_embedded_status_get(const stmdev_ctx_t *ctx, lis2duxs12_embedded_status_t *val)
 {
-  lis2duxs12_emb_func_status_t status;
+  lis2duxs12_emb_func_status_mainpage_t status;
   int32_t ret;
 
-  ret = lis2duxs12_mem_bank_set(ctx, LIS2DUXS12_EMBED_FUNC_MEM_BANK);
-  ret += lis2duxs12_read_reg(ctx, LIS2DUXS12_EMB_FUNC_STATUS, (uint8_t *)&status, 1);
-  ret += lis2duxs12_mem_bank_set(ctx, LIS2DUXS12_MAIN_MEM_BANK);
+  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_EMB_FUNC_STATUS_MAINPAGE, (uint8_t *)&status, 1);
 
   val->is_step_det = status.is_step_det;
   val->is_tilt = status.is_tilt;
