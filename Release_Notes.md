@@ -237,7 +237,7 @@ This directory contains the LIS2DUXS12 component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section18" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section18" aria-hidden="true">
 <label for="collapse-section18" aria-hidden="true">V2.5.0 / 07-Jul-2025</label>
 <div>
 
@@ -252,6 +252,23 @@ This directory contains the LIS2DUXS12 component drivers.
 ##
 
 </div>
+
+<input type="checkbox" id="collapse-section19" checked aria-hidden="true">
+<label for="collapse-section19" aria-hidden="true">V3.0.0 / 07-Oct-2025</label>
+<div>
+
+## Main changes
+
+- Added checks before writes to avoid random content from being written
+- Changed fifo_mode_set API
+- Fix lis2duxs12_stpcnt_mode_get API
+- Adding CODE_OF_CONDUCT.md and SECURITY.md
+- Fix pin_int2_route_get API
+
+##
+
+</div>
+
 :::
 
 :::
