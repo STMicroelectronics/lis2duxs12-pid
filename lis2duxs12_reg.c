@@ -2791,7 +2791,7 @@ int32_t lis2duxs12_stpcnt_rst_step_set(const stmdev_ctx_t *ctx)
   int32_t ret;
 
   ret = lis2duxs12_mem_bank_set(ctx, LIS2DUXS12_EMBED_FUNC_MEM_BANK);
-  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_EMB_FUNC_SRC, (uint8_t *)&emb_func_src, 1);
+  ret += lis2duxs12_read_reg(ctx, LIS2DUXS12_EMB_FUNC_SRC, (uint8_t *)&emb_func_src, 1);
   if (ret == 0)
   {
     emb_func_src.pedo_rst_step = 1;
