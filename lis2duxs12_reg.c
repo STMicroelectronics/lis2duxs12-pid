@@ -16,6 +16,7 @@
  ******************************************************************************
  */
 
+#include <string.h>
 #include "lis2duxs12_reg.h"
 
 /**
@@ -173,6 +174,11 @@ int32_t lis2duxs12_init_set(const stmdev_ctx_t *ctx)
   ret += lis2duxs12_write_reg(ctx, LIS2DUXS12_CTRL4, (uint8_t *)&ctrl4, 1);
   ret += lis2duxs12_write_reg(ctx, LIS2DUXS12_CTRL1, (uint8_t *)&ctrl1, 1);
 
+  if (ctx->priv_data)
+  {
+    memset(ctx->priv_data, 0, sizeof(lis2duxs12_priv_t));
+  }
+
   return ret;
 }
 
@@ -278,6 +284,11 @@ int32_t lis2duxs12_sw_por(const stmdev_ctx_t *ctx)
 
   if (ret == 0)
   {
+    if (ctx->priv_data)
+    {
+      memset(ctx->priv_data, 0, sizeof(lis2duxs12_priv_t));
+    }
+
     ret = lis2duxs12_exit_deep_power_down(ctx);
   }
 
@@ -1178,23 +1189,43 @@ int32_t lis2duxs12_i3c_configure_get(const stmdev_ctx_t *ctx, lis2duxs12_i3c_cfg
   * @brief  Change memory bank.[set]
   *
   * @param  ctx      read / write interface definitions
-  * @param  val      MAIN_MEM_BANK, EMBED_FUNC_MEM_BANK, SENSOR_HUB_MEM_BANK, STRED_MEM_BANK,
+  * @param  val      MAIN_MEM_BANK, EMBED_FUNC_MEM_BANK
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
 int32_t lis2duxs12_mem_bank_set(const stmdev_ctx_t *ctx, lis2duxs12_mem_bank_t val)
 {
   lis2duxs12_func_cfg_access_t func_cfg_access;
-  int32_t ret;
+  int32_t ret = 0;
 
-  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_FUNC_CFG_ACCESS, (uint8_t *)&func_cfg_access, 1);
+  if (ctx->priv_data == NULL)
+  {
+    ret = -1;
+    goto exit;
+  }
+
+  /* init from saved register */
+  func_cfg_access = ((lis2duxs12_priv_t *)ctx->priv_data)->func_cfg_access_main;
+
+  if (func_cfg_access.emb_func_reg_access == 0)
+  {
+    /* MAIN page */
+    ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_FUNC_CFG_ACCESS, (uint8_t *)&func_cfg_access, 1);
+  }
 
   if (ret == 0)
   {
     func_cfg_access.emb_func_reg_access = ((uint8_t)val & 0x1U);
     ret = lis2duxs12_write_reg(ctx, LIS2DUXS12_FUNC_CFG_ACCESS, (uint8_t *)&func_cfg_access, 1);
+
+    if (ret == 0)
+    {
+      /* save register in private data */
+      ((lis2duxs12_priv_t *)ctx->priv_data)->func_cfg_access_main = func_cfg_access;
+    }
   }
 
+exit:
   return ret;
 }
 
@@ -1202,7 +1233,7 @@ int32_t lis2duxs12_mem_bank_set(const stmdev_ctx_t *ctx, lis2duxs12_mem_bank_t v
   * @brief  Change memory bank.[get]
   *
   * @param  ctx      read / write interface definitions
-  * @param  val      MAIN_MEM_BANK, EMBED_FUNC_MEM_BANK, SENSOR_HUB_MEM_BANK, STRED_MEM_BANK,
+  * @param  val      MAIN_MEM_BANK, EMBED_FUNC_MEM_BANK
   * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
@@ -1211,10 +1242,26 @@ int32_t lis2duxs12_mem_bank_get(const stmdev_ctx_t *ctx, lis2duxs12_mem_bank_t *
   lis2duxs12_func_cfg_access_t func_cfg_access;
   int32_t ret;
 
-  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_FUNC_CFG_ACCESS, (uint8_t *)&func_cfg_access, 1);
-  if (ret != 0)
+  if (ctx->priv_data == NULL)
   {
-    return ret;
+    ret = -1;
+    goto exit;
+  }
+
+  /* init from saved register */
+  func_cfg_access = ((lis2duxs12_priv_t *)ctx->priv_data)->func_cfg_access_main;
+
+  if (func_cfg_access.emb_func_reg_access == 0)
+  {
+    /* MAIN page */
+    ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_FUNC_CFG_ACCESS, (uint8_t *)&func_cfg_access, 1);
+    if (ret != 0)
+    {
+      goto exit;
+    }
+
+    /* save register in private data */
+    ((lis2duxs12_priv_t *)ctx->priv_data)->func_cfg_access_main = func_cfg_access;
   }
 
   switch ((func_cfg_access.emb_func_reg_access))
@@ -1231,6 +1278,8 @@ int32_t lis2duxs12_mem_bank_get(const stmdev_ctx_t *ctx, lis2duxs12_mem_bank_t *
       *val = LIS2DUXS12_MAIN_MEM_BANK;
       break;
   }
+
+exit:
   return ret;
 }
 
@@ -2856,7 +2905,7 @@ int32_t lis2duxs12_stpcnt_rst_step_set(const stmdev_ctx_t *ctx)
   int32_t ret;
 
   ret = lis2duxs12_mem_bank_set(ctx, LIS2DUXS12_EMBED_FUNC_MEM_BANK);
-  ret += lis2duxs12_read_reg(ctx, LIS2DUXS12_EMB_FUNC_SRC, (uint8_t *)&emb_func_src, 1);
+  ret = lis2duxs12_read_reg(ctx, LIS2DUXS12_EMB_FUNC_SRC, (uint8_t *)&emb_func_src, 1);
   if (ret == 0)
   {
     emb_func_src.pedo_rst_step = 1;
