@@ -2102,15 +2102,12 @@ float_t lis2duxs12_from_lsb_to_mv(int16_t lsb);
 
 int32_t lis2duxs12_device_id_get(const stmdev_ctx_t *ctx, uint8_t *val);
 
-typedef enum
-{
-  LIS2DUXS12_SENSOR_ONLY_ON     = 0x00, /* Initialize the driver for sensor usage */
-  LIS2DUXS12_BOOT               = 0x01, /* Restore calib. param. (it takes 10ms) */
-  LIS2DUXS12_RESET              = 0x02, /* Reset configuration registers */
-  LIS2DUXS12_SENSOR_EMB_FUNC_ON = 0x03, /* Initialize the driver for sensor and/or
-                                           embedded functions usage (it takes 10ms) */
-} lis2duxs12_init_t;
-int32_t lis2duxs12_init_set(const stmdev_ctx_t *ctx, lis2duxs12_init_t val);
+int32_t lis2duxs12_init_set(const stmdev_ctx_t *ctx);
+
+int32_t lis2duxs12_embedded_state_set(const stmdev_ctx_t *ctx, uint8_t state);
+int32_t lis2duxs12_reboot(const stmdev_ctx_t *ctx);
+int32_t lis2duxs12_sw_por(const stmdev_ctx_t *ctx);
+int32_t lis2duxs12_sw_reset(const stmdev_ctx_t *ctx);
 
 typedef struct
 {
