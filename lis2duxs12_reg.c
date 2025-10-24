@@ -1314,20 +1314,16 @@ int32_t lis2duxs12_ln_pg_write(const stmdev_ctx_t *ctx, uint16_t address, uint8_
     }
   }
 
+exit:
   page_sel.page_sel = 0;
   page_sel.not_used0 = 1;// Default value
   ret += lis2duxs12_write_reg(ctx, LIS2DUXS12_PAGE_SEL, (uint8_t *)&page_sel, 1);
 
   ret += lis2duxs12_read_reg(ctx, LIS2DUXS12_PAGE_RW, (uint8_t *)&page_rw, 1);
-  if (ret != 0)
-  {
-    goto exit;
-  }
   page_rw.page_read = PROPERTY_DISABLE;
   page_rw.page_write = PROPERTY_DISABLE;
   ret += lis2duxs12_write_reg(ctx, LIS2DUXS12_PAGE_RW, (uint8_t *)&page_rw, 1);
 
-exit:
   ret += lis2duxs12_mem_bank_set(ctx, LIS2DUXS12_MAIN_MEM_BANK);
 
   return ret;
@@ -1423,20 +1419,16 @@ int32_t lis2duxs12_ln_pg_read(const stmdev_ctx_t *ctx, uint16_t address, uint8_t
     }
   }
 
+exit:
   page_sel.page_sel = 0;
   page_sel.not_used0 = 1;// Default value
   ret += lis2duxs12_write_reg(ctx, LIS2DUXS12_PAGE_SEL, (uint8_t *)&page_sel, 1);
 
   ret += lis2duxs12_read_reg(ctx, LIS2DUXS12_PAGE_RW, (uint8_t *)&page_rw, 1);
-  if (ret != 0)
-  {
-    goto exit;
-  }
   page_rw.page_read = PROPERTY_DISABLE;
   page_rw.page_write = PROPERTY_DISABLE;
   ret += lis2duxs12_write_reg(ctx, LIS2DUXS12_PAGE_RW, (uint8_t *)&page_rw, 1);
 
-exit:
   ret += lis2duxs12_mem_bank_set(ctx, LIS2DUXS12_MAIN_MEM_BANK);
 
   return ret;
